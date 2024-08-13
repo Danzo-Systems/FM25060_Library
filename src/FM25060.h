@@ -1,14 +1,18 @@
+#ifndef FM25060_H
+#define FM25060_H
 
+#include "Arduino.h"
 
+class FM25060
+{
+public:
+    FM25060(int inverterAddress, int maxSpeed, int maxMotorSpeed); // Constructor
+    void begin();  // Initialization method
+    void setSpeed(float speed); // Method to set the motor speed
 
-class FM25060 {
-   public:
-
-   FM25060(int inverterAddres, int maxSpeed, int maxMotorSpeed);
-
-   void begin();
-
-   void setSpeed(float speed);
-
+private:
+    int maxMotorSpeed; // Maximum motor speed
+    byte addr; // Inverter address
 };
 
+#endif
