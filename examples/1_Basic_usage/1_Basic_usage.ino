@@ -1,4 +1,5 @@
 #include "FM25060.h"
+#include <Wire.h>
 
 
 int i2cAdress = 15; //set adress of the motor controller 
@@ -9,8 +10,8 @@ FM25060 motorController(i2cAdress, maxSpeed, maxMotorSpeed); //Initalize motor c
 
 void setup() {
   
-motorController.begin(); //initialize inverter
-motorController.setSpeed(0); //set speed to 0km/h
+  motorController.begin(); //initialize inverter
+  motorController.setSpeed(0); //set speed to 0km/h
 
 }
 
