@@ -14,6 +14,7 @@ private:
     int maxMotorSpeed; // Maximum motor speed
 	int maxSpeed; // Maximum speed
     byte addr; // Inverter address
+    byte packetData[4];
 };
 
 #endif

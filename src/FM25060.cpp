@@ -3,6 +3,7 @@
 #include <Wire.h>
 
 float factor = 312500;
+byte packetData[4] = { 0x0 };
 
 FM25060::FM25060(int inverterAddress, int maxSpeed, int maxMotorSpeed)
     : addr(inverterAddress), maxMotorSpeed(maxMotorSpeed), maxSpeed(maxSpeed)
@@ -18,11 +19,13 @@ void FM25060::begin()
 void FM25060::setSpeed(float speed)
 {
     float calculatedFactor = factor / speed / 800 * maxMotorSpeed / 150 * maxSpeed;
-    int delayValue = (int)calculatedFactor;
-
+    uint32_t delayValue = (int)calculatedFactor;
+    packetData[3] = (delayValue >> 24) & 0xFF;
+    packetData[2] = (delayValue >> 16) & 0xFF;
+    packetData[1] = (delayValue >> 8) & 0xFF;
+    packetData[0] = delayValue & 0xFF;
     // Sending the delayValue as two bytes
     Wire.beginTransmission(addr);
-    Wire.write((byte)(delayValue >> 8)); // High byte
-    Wire.write((byte)(delayValue & 0xFF)); // Low byte
+    Wire.write(packetData, sizeof(packetData));
     Wire.endTransmission(true);
 }
