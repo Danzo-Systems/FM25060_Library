@@ -1,3 +1,4 @@
+// FM25060.cpp
 #include "Arduino.h"
 #include "FM25060.h"
 #include <Wire.h>
@@ -5,10 +6,12 @@
 float factor = 312500;
 byte packetData[4] = { 0x0 };
 
-FM25060::FM25060(int inverterAddress, int maxSpeed, int maxMotorSpeed)
-    : addr(inverterAddress), maxMotorSpeed(maxMotorSpeed), maxSpeed(maxSpeed)
+
+FM25060::FM25060(int _inverterAddress, int _maxSpeed, int _maxMotorSpeed)
 {
-    // Constructor initialization
+  maxMotorSpeed = _maxMotorSpeed;
+  maxSpeed = _maxSpeed;
+  addr = _inverterAddress;
 }
 
 void FM25060::begin()
@@ -18,7 +21,7 @@ void FM25060::begin()
 
 void FM25060::setSpeed(float speed)
 {
-    float calculatedFactor = factor / speed / 800 * maxMotorSpeed / 150 * maxSpeed;
+    float calculatedFactor = factor /( speed / 800 * maxMotorSpeed / 150 * maxSpeed);
     uint32_t delayValue = (int)calculatedFactor;
     packetData[3] = (delayValue >> 24) & 0xFF;
     packetData[2] = (delayValue >> 16) & 0xFF;
