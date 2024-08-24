@@ -21,6 +21,9 @@ void FM25060::begin()
 
 void FM25060::setSpeed(float speed)
 {
+	if (speed <= 0) {
+		speed = 1;
+	}
     float calculatedFactor = factor /( speed / 800 * maxMotorSpeed / 150 * maxSpeed);
     uint32_t delayValue = (int)calculatedFactor;
     packetData[3] = (delayValue >> 24) & 0xFF;
