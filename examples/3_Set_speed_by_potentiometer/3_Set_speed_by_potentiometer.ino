@@ -13,7 +13,7 @@ void setup() {
 
 void loop() {
   // Define data packet to be sent
-  int num = map(analogRead(potentiometerPort), 0, 1023, 0, 150);
+  int num = map(analogRead(potentiometerPort), 0, 1023, 1, 150);
   motorController.setSpeed(num); //set speed to 40km/h
   delay(200);
 }
